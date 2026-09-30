@@ -1,11 +1,11 @@
 name: build
 on: [push, workflow_dispatch]
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: unzip safedrops.zip
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -14,7 +14,8 @@ jobs:
         with:
           gradle-version: 8.12
       - run: gradle build
+        working-directory: safedrops
       - uses: actions/upload-artifact@v4
         with:
           name: safedrops
-          path: build/libs/*.jar
+          path: safedrops/build/libs/*.jar
